@@ -2,7 +2,7 @@
 
 set -o nounset
 
-print_project_dir() {
+print_this_dir() {
   local real_path="$(readlink --canonicalize "$0")"
   (
     cd "$(dirname "$real_path")"
@@ -10,7 +10,7 @@ print_project_dir() {
   )
 }
 
-export PROJECT_DIR="$(print_project_dir)"
+export PROJECT_DIR="$(print_this_dir)"
 export TEST_DIR="${PROJECT_DIR}/test"
 export TEMP_DIR="${PROJECT_DIR}/z_tmp"
 EXE_FILE=${PROJECT_DIR}/bin/app
