@@ -21,8 +21,6 @@ MAX_ID_COMPILE=29
 
 ERRS=""
 
-export RUST_BACKTRACE=1
-
 run_test_json() {
   local infile="$1"; shift
 
