@@ -221,11 +221,7 @@ def parse_expr : Expr
   return expr_l if tail.nil?
 
   op, expr_r = tail
-  expr = List.new
-  expr << op
-  expr << expr_l
-  expr << expr_r
-  expr
+  [op, expr_l, expr_r] of Node
 end
 
 def parse_set : Stmt
