@@ -159,23 +159,6 @@ def gen_expr(
   end
 end
 
-def gen_var(
-      fn_arg_names : Names,
-      lvar_names : Names,
-      stmt : Stmt
-    )
-  puts "  sub_sp 1"
-
-  if stmt.size == 3
-    _gen_set(
-      fn_arg_names,
-      lvar_names,
-      stmt[1].as(String),
-      stmt[2]
-    )
-  end
-end
-
 def _gen_call(
       fn_arg_names : Names,
       lvar_names : Names,
@@ -331,6 +314,23 @@ end
 
 def gen_vm_comment(comment : String)
   puts "  _cmt " + comment.gsub(" ", "~")
+end
+
+def gen_var(
+      fn_arg_names : Names,
+      lvar_names : Names,
+      stmt : Stmt
+    )
+  puts "  sub_sp 1"
+
+  if stmt.size == 3
+    _gen_set(
+      fn_arg_names,
+      lvar_names,
+      stmt[1].as(String),
+      stmt[2]
+    )
+  end
 end
 
 def gen_func_def(rest : List)
