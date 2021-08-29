@@ -296,9 +296,6 @@ def gen_case(
 
     puts "  compare"
     puts "  jump_eq #{label_end_when_head}_#{when_idx}"
-    puts "  jump #{label_when_head}_#{when_idx}"
-
-    puts "label #{label_when_head}_#{when_idx}"
 
     gen_stmts(fn_arg_names, lvar_names, rest)
     puts "  jump #{label_end}"
