@@ -258,9 +258,6 @@ def gen_while(
 
   puts "  jump_eq end_while_#{label_id}"
 
-  puts "  jump true_#{label_id}"
-
-  puts "label true_#{label_id}"
   gen_stmts(fn_arg_names, lvar_names, body)
 
   puts "  jump while_#{label_id}"
