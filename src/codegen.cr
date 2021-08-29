@@ -295,11 +295,11 @@ def gen_case(
 
     gen_expr(fn_arg_names, lvar_names, cond)
 
-    puts "  cp 1 reg_b"
+    puts "  cp 0 reg_b"
 
     puts "  compare"
-    puts "  jump_eq #{label_when_head}_#{when_idx}"
-    puts "  jump #{label_end_when_head}_#{when_idx}"
+    puts "  jump_eq #{label_end_when_head}_#{when_idx}"
+    puts "  jump #{label_when_head}_#{when_idx}"
 
     puts "label #{label_when_head}_#{when_idx}"
 
