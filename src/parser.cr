@@ -206,44 +206,26 @@ def parse_expr : Expr
   when :int
     inc_pos()
     expr_l = t_left.value_as_int
-    tail = parse_expr_right()
-    return expr_l if tail.nil?
-
-    op, expr_r = tail
-    expr = List.new
-    expr << op
-    expr << expr_l
-    expr << expr_r
-    return expr
   when :ident
     inc_pos()
     expr_l = t_left.value
-    tail = parse_expr_right()
-    return expr_l if tail.nil?
-
-    op, expr_r = tail
-    expr = List.new
-    expr << op
-    expr << expr_l
-    expr << expr_r
-    return expr
   when :sym
     consume "("
     expr_l = parse_expr()
     consume ")"
-
-    tail = parse_expr_right()
-    return expr_l if tail.nil?
-
-    op, expr_r = tail
-    expr = List.new
-    expr << op
-    expr << expr_l
-    expr << expr_r
-    return expr
   else
     raise "unexpected kind"
   end
+
+  tail = parse_expr_right()
+  return expr_l if tail.nil?
+
+  op, expr_r = tail
+  expr = List.new
+  expr << op
+  expr << expr_l
+  expr << expr_r
+  expr
 end
 
 def parse_set : Stmt
