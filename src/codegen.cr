@@ -253,12 +253,12 @@ def gen_while(
 
   gen_expr(fn_arg_names, lvar_names, cond_expr)
 
-  puts "  cp 1 reg_b" # 比較対象の値（真）をセット
+  puts "  cp 0 reg_b" # 比較対象の値をセット
   puts "  compare"
 
-  puts "  jump_eq true_#{label_id}"
+  puts "  jump_eq end_while_#{label_id}"
 
-  puts "  jump end_while_#{label_id}"
+  puts "  jump true_#{label_id}"
 
   puts "label true_#{label_id}"
   gen_stmts(fn_arg_names, lvar_names, body)

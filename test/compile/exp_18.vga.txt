@@ -1,8 +1,11 @@
   call main
   exit
+
 label main
   push bp
   cp sp bp
+
+  # 関数の処理本体
   sub_sp 1
   cp 0 reg_a
   cp reg_a [bp:-1]
@@ -21,16 +24,35 @@ label while_1
 label then_2
   cp 1 reg_a
 label end_eq_2
-  cp 1 reg_b
+  cp 0 reg_b
   compare
-  jump_eq true_1
-  jump end_while_1
+  jump_eq end_while_1
+  jump true_1
 label true_1
   cp 1 reg_a
   cp reg_a [bp:-1]
   jump while_1
 label end_while_1
 
+
   cp bp sp
   pop bp
   ret
+#>builtins
+
+label set_vram
+  push bp
+  cp sp bp
+  set_vram [bp:2] [bp:3]
+  cp bp sp
+  pop bp
+  ret
+
+label get_vram
+  push bp
+  cp sp bp
+  get_vram [bp:2] reg_a
+  cp bp sp
+  pop bp
+  ret
+#<builtins
