@@ -202,22 +202,6 @@ end
 def parse_expr : Expr
   t_left = peek()
 
-  if t_left.value == "("
-    consume "("
-    expr_l = parse_expr()
-    consume ")"
-
-    tail = parse_expr_right()
-    return expr_l if tail.nil?
-
-    op, expr_r = tail
-    expr = List.new
-    expr << op
-    expr << expr_l
-    expr << expr_r
-    return expr
-  end
-
   case t_left.kind
   when :int
     inc_pos()
@@ -234,6 +218,20 @@ def parse_expr : Expr
   when :ident
     inc_pos()
     expr_l = t_left.value
+    tail = parse_expr_right()
+    return expr_l if tail.nil?
+
+    op, expr_r = tail
+    expr = List.new
+    expr << op
+    expr << expr_l
+    expr << expr_r
+    return expr
+  when :sym
+    consume "("
+    expr_l = parse_expr()
+    consume ")"
+
     tail = parse_expr_right()
     return expr_l if tail.nil?
 
