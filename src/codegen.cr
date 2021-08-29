@@ -316,6 +316,10 @@ def gen_vm_comment(comment : String)
   puts "  _cmt " + comment.gsub(" ", "~")
 end
 
+def gen_debug
+  puts "  _debug"
+end
+
 def gen_var(
       fn_arg_names : Names,
       lvar_names : Names,
@@ -390,6 +394,8 @@ def gen_stmt(
     gen_case(fn_arg_names, lvar_names, stmt)
   when "_cmt"
     gen_vm_comment(stmt_rest[0].as(String))
+  when "_debug"
+    gen_debug()
   else
     raise "unexpected statement"
   end

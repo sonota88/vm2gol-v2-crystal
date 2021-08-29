@@ -358,6 +358,15 @@ def parse_vm_comment : Stmt
   ["_cmt", comment] of Node
 end
 
+def parse_debug : Stmt
+  consume "_debug"
+  consume "("
+  consume ")"
+  consume ";"
+
+  ["_debug"] of Node
+end
+
 def parse_stmt : Stmt
   case peek().value
   when "set"      then parse_set()
@@ -367,6 +376,7 @@ def parse_stmt : Stmt
   when "while"    then parse_while()
   when "case"     then parse_case()
   when "_cmt"     then parse_vm_comment()
+  when "_debug"   then parse_debug()
   else
     raise "unexpected token"
   end
