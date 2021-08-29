@@ -8,6 +8,11 @@ tokens = [] of Token
 pos = 0
 lineno = 1
 
+KEYWORDS = [
+  "func", "set", "var", "call_set", "call", "return", "case", "while",
+  "_cmt", "_debug"
+]
+
 while pos < src.size
   rest = src[pos .. -1]
 
@@ -30,11 +35,6 @@ while pos < src.size
     tokens << Token.new(:str, str, lineno)
     pos += str.size + 2
 
-  when /\A(func|set|var|call_set|call|return|case|while|_cmt|_debug)[^a-z_]/
-    str = $1
-    tokens << Token.new(:kw, str, lineno)
-    pos += str.size
-
   when /\A(-?[0-9]+)/
     str = $1
     tokens << Token.new(:int, str, lineno)
@@ -47,7 +47,8 @@ while pos < src.size
 
   when /\A([a-z_][a-z0-9_]*)/
     str = $1
-    tokens << Token.new(:ident, str, lineno)
+    kind = KEYWORDS.includes?(str) ? :kw : :ident
+    tokens << Token.new(kind, str, lineno)
     pos += str.size
 
   else
