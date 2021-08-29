@@ -170,36 +170,32 @@ def parse_var : Stmt
   end
 end
 
-def parse_expr_right(expr_l : Expr) : Expr
+def parse_expr_right : Tuple(String, Expr)?
   t = peek()
-
-  if t.value == ";" || t.value == ")"
-    return expr_l
-  end
 
   case t.value
   when "+"
     consume "+"
     expr_r = parse_expr()
-    ["+", expr_l, expr_r] of Node
+    {"+", expr_r}
 
   when "*"
     consume "*"
     expr_r = parse_expr()
-    ["*", expr_l, expr_r] of Node
+    {"*", expr_r}
 
   when "=="
     consume "=="
     expr_r = parse_expr()
-    ["eq", expr_l, expr_r] of Node
+    {"eq", expr_r}
 
   when "!="
     consume "!="
     expr_r = parse_expr()
-    ["neq", expr_l, expr_r] of Node
+    {"neq", expr_r}
 
   else
-    raise "unexpected token"
+    nil
   end
 end
 
@@ -211,18 +207,42 @@ def parse_expr : Expr
     expr_l = parse_expr()
     consume ")"
 
-    return parse_expr_right(expr_l)
+    tail = parse_expr_right()
+    return expr_l if tail.nil?
+
+    op, expr_r = tail
+    expr = List.new
+    expr << op
+    expr << expr_l
+    expr << expr_r
+    return expr
   end
 
   case t_left.kind
   when :int
     inc_pos()
     expr_l = t_left.value_as_int
-    parse_expr_right(expr_l)
+    tail = parse_expr_right()
+    return expr_l if tail.nil?
+
+    op, expr_r = tail
+    expr = List.new
+    expr << op
+    expr << expr_l
+    expr << expr_r
+    return expr
   when :ident
     inc_pos()
     expr_l = t_left.value
-    parse_expr_right(expr_l)
+    tail = parse_expr_right()
+    return expr_l if tail.nil?
+
+    op, expr_r = tail
+    expr = List.new
+    expr << op
+    expr << expr_l
+    expr << expr_r
+    return expr
   else
     raise "unexpected kind"
   end
