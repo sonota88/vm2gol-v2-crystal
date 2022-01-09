@@ -55,7 +55,7 @@ setup() {
 build() {
   set -o errexit
 
-  local opts="--error-trace"
+  local opts="--error-trace --static"
 
   ./docker_run.sh crystal build src/json_tester.cr -o bin/json_tester $opts
   ./docker_run.sh crystal build src/lexer.cr -o bin/lexer $opts
