@@ -170,35 +170,6 @@ def parse_var : Stmt
   end
 end
 
-def parse_expr_right : Tuple(String, Expr)?
-  t = peek()
-
-  case t.value
-  when "+"
-    consume "+"
-    expr_r = parse_expr()
-    {"+", expr_r}
-
-  when "*"
-    consume "*"
-    expr_r = parse_expr()
-    {"*", expr_r}
-
-  when "=="
-    consume "=="
-    expr_r = parse_expr()
-    {"eq", expr_r}
-
-  when "!="
-    consume "!="
-    expr_r = parse_expr()
-    {"neq", expr_r}
-
-  else
-    nil
-  end
-end
-
 def binop?(t) : Bool
   ["+", "*", "==", "!="].includes?(t.value)
 end
