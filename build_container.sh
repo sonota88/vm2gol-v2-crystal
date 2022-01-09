@@ -1,6 +1,6 @@
 #!/bin/bash
 
-opts="--error-trace --static"
+opts="--error-trace"
 
 crystal build src/json_tester.cr -o bin/json_tester $opts
 crystal build src/lexer.cr -o bin/lexer $opts
