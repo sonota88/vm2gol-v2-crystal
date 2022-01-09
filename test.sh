@@ -55,10 +55,12 @@ setup() {
 build() {
   set -o errexit
 
-  ./docker_run.sh crystal build src/json_tester.cr -o bin/json_tester --error-trace
-  ./docker_run.sh crystal build src/lexer.cr -o bin/lexer --error-trace
-  ./docker_run.sh crystal build src/parser.cr -o bin/parser --error-trace
-  ./docker_run.sh crystal build src/codegen.cr -o bin/codegen --error-trace
+  local opts="--error-trace"
+
+  ./docker_run.sh crystal build src/json_tester.cr -o bin/json_tester $opts
+  ./docker_run.sh crystal build src/lexer.cr -o bin/lexer $opts
+  ./docker_run.sh crystal build src/parser.cr -o bin/parser $opts
+  ./docker_run.sh crystal build src/codegen.cr -o bin/codegen $opts
 
   set +o errexit
 }
