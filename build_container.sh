@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir -p bin
+
 opts="--error-trace"
 
 crystal build src/json_tester.cr -o bin/json_tester $opts
