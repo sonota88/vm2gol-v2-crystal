@@ -12,5 +12,5 @@ Default target: x86_64-unknown-linux-gnu
 docker build \
   --build-arg USER=$USER \
   --build-arg GROUP=$(id -gn) \
-  -t vm2gol-v2:crystal .
+  -t vm2gol-v2-crystal:1 .
 ```
