@@ -1,0 +1,26 @@
+  call main
+  exit
+
+label main
+  push bp
+  cp sp bp
+
+  cp 1 reg_a
+  push reg_a
+
+  cp 2 reg_a
+  push reg_a
+  pop reg_b
+  pop reg_a
+  add_ab
+
+  push reg_a
+  cp 3 reg_a
+  push reg_a
+  pop reg_b
+  pop reg_a
+  mult_ab
+
+  cp bp sp
+  pop bp
+  ret

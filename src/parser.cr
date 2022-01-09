@@ -199,29 +199,56 @@ def parse_expr_right : Tuple(String, Expr)?
   end
 end
 
-def parse_expr : Expr
+def binop?(t) : Bool
+  ["+", "*", "==", "!="].includes?(t.value)
+end
+
+def _parse_expr_factor : Expr
   t_left = peek()
 
   case t_left.kind
   when :int
     inc_pos()
-    expr_l = t_left.value_as_int
+    t_left.value_as_int
   when :ident
     inc_pos()
-    expr_l = t_left.value
+    t_left.value
   when :sym
     consume "("
-    expr_l = parse_expr()
+    expr = parse_expr()
     consume ")"
+    expr
   else
     raise "unexpected kind"
   end
+end
 
-  tail = parse_expr_right()
-  return expr_l if tail.nil?
+def parse_expr : Expr
+  expr : Expr = _parse_expr_factor()
 
-  op, expr_r = tail
-  [op, expr_l, expr_r] of Node
+  while binop?(peek())
+    op =
+      case peek().value
+      when "+" then "+"
+      when "*" then "*"
+      when "==" then "eq"
+      when "!=" then "neq"
+      else
+        raise "must not happen"
+      end
+    inc_pos()
+
+    factor : Node = _parse_expr_factor()
+
+    new_expr = [] of Node
+    new_expr << op
+    new_expr << expr
+    new_expr << factor
+
+    expr = new_expr
+  end
+
+  expr
 end
 
 def parse_set : Stmt
