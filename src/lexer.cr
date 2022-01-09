@@ -9,7 +9,7 @@ pos = 0
 lineno = 1
 
 KEYWORDS = [
-  "func", "set", "var", "call_set", "call", "return", "case", "while",
+  "func", "set", "var", "call_set", "call", "return", "case", "when", "while",
   "_cmt", "_debug"
 ]
 

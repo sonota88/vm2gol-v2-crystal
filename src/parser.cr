@@ -304,11 +304,10 @@ end
 def parse_case : Stmt
   consume "case"
 
-  consume "{"
-
   when_clauses = List.new
 
-  while peek().value != "}"
+  while peek().value == "when"
+    consume "when"
     consume "("
     expr = parse_expr()
     consume ")"
@@ -322,8 +321,6 @@ def parse_case : Stmt
     expr_stmts += stmts
     when_clauses << expr_stmts
   end
-
-  consume "}"
 
   ret = List.new
   ret << "case"
