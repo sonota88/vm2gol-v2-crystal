@@ -2,4 +2,4 @@
 
 docker run --rm -it \
   -v"$(pwd):/home/${USER}/work" \
-  vm2gol-v2-crystal:2 "$@"
+  vm2gol-v2-crystal:3 "$@"
