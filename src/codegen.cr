@@ -230,11 +230,12 @@ def gen_set(
 end
 
 def gen_return(
+      fn_arg_names : Names,
       lvar_names : Names,
       stmt : Stmt
     )
   expr = stmt[1]
-  gen_expr([] of String, lvar_names, expr)
+  gen_expr(fn_arg_names, lvar_names, expr)
 end
 
 def gen_while(
@@ -381,7 +382,7 @@ def gen_stmt(
   when "call_set"
     gen_call_set(fn_arg_names, lvar_names, stmt)
   when "return"
-    gen_return(lvar_names, stmt)
+    gen_return(fn_arg_names, lvar_names, stmt)
   when "while"
     gen_while(fn_arg_names, lvar_names, stmt)
   when "case"
