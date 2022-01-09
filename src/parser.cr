@@ -198,15 +198,7 @@ def parse_expr : Expr
   expr : Expr = _parse_expr_factor()
 
   while binop?(peek())
-    op =
-      case peek().value
-      when "+" then "+"
-      when "*" then "*"
-      when "==" then "eq"
-      when "!=" then "neq"
-      else
-        raise "must not happen"
-      end
+    op = peek().value
     inc_pos()
 
     factor : Node = _parse_expr_factor()

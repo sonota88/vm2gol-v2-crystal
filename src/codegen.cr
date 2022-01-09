@@ -129,8 +129,8 @@ def _gen_expr_binary(
   case operator
   when "+"   then _gen_expr_add()
   when "*"   then _gen_expr_mult()
-  when "eq"  then _gen_expr_eq()
-  when "neq" then _gen_expr_neq()
+  when "=="  then _gen_expr_eq()
+  when "!="  then _gen_expr_neq()
   else
     raise "unexpected operator"
   end
