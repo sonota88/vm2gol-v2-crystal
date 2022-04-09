@@ -1,9 +1,14 @@
 素朴な自作言語のコンパイラをCrystalに移植した  
 https://memo88.hatenablog.com/entry/20210327_vm2gol_v2_crystal
 
-```
-Crystal 1.3.0 [a3ee70ca0] (2022-01-06)
+```sh
+./docker_build.sh
 
-LLVM: 10.0.0
-Default target: x86_64-unknown-linux-gnu
+./docker_run.sh crystal version
+#=> Crystal 1.4.0 [ef05e26d6] (2022-04-06)
+#=> 
+#=> LLVM: 10.0.0
+#=> Default target: x86_64-unknown-linux-gnu
+
+./test.sh all
 ```
