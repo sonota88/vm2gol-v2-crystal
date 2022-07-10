@@ -3,4 +3,4 @@
 docker build \
   --build-arg USER=$USER \
   --build-arg GROUP=$(id -gn) \
-  -t vm2gol-v2-crystal:5 .
+  -t vm2gol-v2-crystal:6 .
