@@ -30,7 +30,7 @@ def json_parse_list(xs)
 end
 
 def json_parse(json) : List
-  data: JSON::Any = JSON.parse(json)
+  data : JSON::Any = JSON.parse(json)
   json_parse_list(data.as_a)
 end
 
