@@ -11,7 +11,7 @@ RUN apt update \
 RUN apt update \
   && apt install -y --no-install-recommends \
     gcc \
-    libc6-dev libpcre3-dev libevent-dev \
+    libc6-dev libpcre2-dev libevent-dev \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
@@ -25,7 +25,7 @@ USER ${USER}
 
 WORKDIR /home/${USER}/
 
-ARG version="1.7.3"
+ARG version="1.8.2"
 ARG archive_file="crystal-${version}-1-linux-x86_64.tar.gz"
 
 RUN wget -q \
