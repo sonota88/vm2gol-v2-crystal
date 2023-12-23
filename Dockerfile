@@ -25,7 +25,7 @@ USER ${USER}
 
 WORKDIR /home/${USER}/
 
-ARG version="1.8.2"
+ARG version="1.10.1"
 ARG archive_file="crystal-${version}-1-linux-x86_64.tar.gz"
 
 RUN wget -q \

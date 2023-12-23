@@ -7,7 +7,7 @@ https://memo88.hatenablog.com/entry/20210327_vm2gol_v2_crystal
   $ ./docker.sh build
 
   $ ./docker.sh run crystal version
-Crystal 1.8.2 [7aa5cdd86] (2023-05-09)
+Crystal 1.10.1 [c6f3552f5] (2023-10-13)
 
 LLVM: 15.0.7
 Default target: x86_64-unknown-linux-gnu
