@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./docker_run.sh bash test_container.sh "$@"
+./docker.sh run bash test_container.sh "$@"
