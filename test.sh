@@ -15,10 +15,10 @@ readonly TEST_COMMON_DIR="${PROJECT_DIR}/test_common"
 readonly TEMP_DIR="${PROJECT_DIR}/z_tmp"
 readonly EXE_FILE=${PROJECT_DIR}/bin/app
 
-readonly MAX_ID_JSON=6
+readonly MAX_ID_JSON=8
 readonly MAX_ID_LEX=3
 readonly MAX_ID_PARSE=2
-readonly MAX_ID_COMPILE=29
+readonly MAX_ID_COMPILE=27
 
 ERRS=""
 
@@ -92,9 +92,9 @@ test_json_nn() {
 
   echo "case ${nn}"
 
-  local input_file="${TEST_DIR}/json/${nn}.json"
+  local input_file="${TEST_COMMON_DIR}/json/${nn}.json"
   local temp_json_file="${TEMP_DIR}/test.json"
-  local exp_file="${TEST_DIR}/json/${nn}.json"
+  local exp_file="${TEST_COMMON_DIR}/json/${nn}.json"
 
   run_test_json $input_file > $temp_json_file
   if [ $? -ne 0 ]; then
@@ -126,9 +126,9 @@ test_lex_nn() {
 
   echo "case ${nn}"
 
-  local input_file="${TEST_DIR}/lex/${nn}.vg.txt"
+  local input_file="${TEST_COMMON_DIR}/lex/${nn}.vg.txt"
   local temp_tokens_file="${TEMP_DIR}/test.tokens.txt"
-  local exp_file="${TEST_DIR}/lex/exp_${nn}.txt"
+  local exp_file="${TEST_COMMON_DIR}/lex/exp_${nn}.txt"
 
   run_lex $input_file > $temp_tokens_file
   if [ $? -ne 0 ]; then
@@ -160,10 +160,10 @@ test_parse_nn() {
 
   echo "case ${nn}"
 
-  local input_file="${TEST_DIR}/parse/${nn}.vg.txt"
+  local input_file="${TEST_COMMON_DIR}/parse/${nn}.vg.txt"
   local temp_tokens_file="${TEMP_DIR}/test.tokens.txt"
   local temp_vgt_file="${TEMP_DIR}/test.vgt.json"
-  local exp_file="${TEST_DIR}/parse/exp_${nn}.vgt.json"
+  local exp_file="${TEST_COMMON_DIR}/parse/exp_${nn}.vgt.json"
 
   echo "  lex" >&2
   run_lex $input_file > $temp_tokens_file
@@ -204,11 +204,11 @@ test_parse() {
 test_compile_do_skip() {
   local nn="$1"; shift
 
-  for skip_nn in 25 26 27 28; do
-    if [ "$nn" = "$skip_nn" ]; then
-      return 0
-    fi
-  done
+  # for skip_nn in 25 26 27 28; do
+  #   if [ "$nn" = "$skip_nn" ]; then
+  #     return 0
+  #   fi
+  # done
 
   return 1
 }
@@ -227,10 +227,10 @@ test_compile_nn() {
   local temp_vgt_file="${TEMP_DIR}/test.vgt.json"
   local temp_vga_file="${TEMP_DIR}/test.vga.txt"
   local local_errs=""
-  local exp_file="${TEST_DIR}/compile/exp_${nn}.vga.txt"
+  local exp_file="${TEST_COMMON_DIR}/compile/exp_${nn}.vga.txt"
 
   echo "  lex" >&2
-  run_lex ${TEST_DIR}/compile/${nn}.vg.txt \
+  run_lex ${TEST_COMMON_DIR}/compile/${nn}.vg.txt \
     > $temp_tokens_file
   if [ $? -ne 0 ]; then
     ERRS="${ERRS},compile_${nn}_lex"
