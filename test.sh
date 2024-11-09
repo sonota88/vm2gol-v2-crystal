@@ -2,22 +2,22 @@
 
 set -o nounset
 
-print_this_dir() {
+print_project_dir() {
   (
     cd "$(dirname "$0")"
     pwd
   )
 }
 
-export PROJECT_DIR="$(print_this_dir)"
-export TEST_DIR="${PROJECT_DIR}/test"
-export TEMP_DIR="${PROJECT_DIR}/z_tmp"
-EXE_FILE=${PROJECT_DIR}/bin/app
+readonly PROJECT_DIR="$(print_project_dir)"
+readonly TEST_DIR="${PROJECT_DIR}/test"
+readonly TEMP_DIR="${PROJECT_DIR}/z_tmp"
+readonly EXE_FILE=${PROJECT_DIR}/bin/app
 
-MAX_ID_JSON=6
-MAX_ID_LEX=3
-MAX_ID_PARSE=2
-MAX_ID_COMPILE=29
+readonly MAX_ID_JSON=6
+readonly MAX_ID_LEX=3
+readonly MAX_ID_PARSE=2
+readonly MAX_ID_COMPILE=29
 
 ERRS=""
 
@@ -69,7 +69,7 @@ postproc() {
     echo "${stage}: ok"
   else
     echo "----"
-    echo "FAILED: ${ERRS}"
+    echo "FAILED: ${ERRS}" | sed -e 's/,/\n  /g'
     exit 1
   fi
 }
@@ -131,7 +131,7 @@ test_lex_nn() {
 
   run_lex $input_file > $temp_tokens_file
   if [ $? -ne 0 ]; then
-    ERRS="${ERRS},${nn}_lex"
+    ERRS="${ERRS},lex_${nn}_lex"
     return
   fi
 
@@ -167,7 +167,7 @@ test_parse_nn() {
   echo "  lex" >&2
   run_lex $input_file > $temp_tokens_file
   if [ $? -ne 0 ]; then
-    ERRS="${ERRS},${nn}_lex"
+    ERRS="${ERRS},parse_${nn}_lex"
     return
   fi
 
@@ -175,7 +175,7 @@ test_parse_nn() {
   run_parse $temp_tokens_file \
     > $temp_vgt_file
   if [ $? -ne 0 ]; then
-    ERRS="${ERRS},${nn}_parse"
+    ERRS="${ERRS},parse_${nn}_parse"
     return
   fi
 
@@ -232,7 +232,7 @@ test_compile_nn() {
   run_lex ${TEST_DIR}/compile/${nn}.vg.txt \
     > $temp_tokens_file
   if [ $? -ne 0 ]; then
-    ERRS="${ERRS},${nn}_lex"
+    ERRS="${ERRS},compile_${nn}_lex"
     local_errs="${local_errs},${nn}_lex"
     return
   fi
@@ -241,7 +241,7 @@ test_compile_nn() {
   run_parse $temp_tokens_file \
     > $temp_vgt_file
   if [ $? -ne 0 ]; then
-    ERRS="${ERRS},${nn}_parse"
+    ERRS="${ERRS},compile_${nn}_parse"
     local_errs="${local_errs},${nn}_parse"
     return
   fi
@@ -250,7 +250,7 @@ test_compile_nn() {
   run_codegen $temp_vgt_file \
     > $temp_vga_file
   if [ $? -ne 0 ]; then
-    ERRS="${ERRS},${nn}_codegen"
+    ERRS="${ERRS},compile_${nn}_codegen"
     local_errs="${local_errs},${nn}_codegen"
     return
   fi
@@ -282,28 +282,28 @@ test_all() {
   echo "==== json ===="
   test_json
   if [ $? -ne 0 ]; then
-    ERRS="${ERRS},${nn}_json"
+    ERRS="${ERRS},all_json"
     return
   fi
 
   echo "==== lex ===="
   test_lex
   if [ $? -ne 0 ]; then
-    ERRS="${ERRS},${nn}_lex"
+    ERRS="${ERRS},all_lex"
     return
   fi
 
   echo "==== parse ===="
   test_parse
   if [ $? -ne 0 ]; then
-    ERRS="${ERRS},${nn}_parser"
+    ERRS="${ERRS},all_parse"
     return
   fi
 
   echo "==== compile ===="
   test_compile
   if [ $? -ne 0 ]; then
-    ERRS="${ERRS},${nn}_compile"
+    ERRS="${ERRS},all_compile"
     return
   fi
 }
@@ -311,44 +311,43 @@ test_all() {
 # --------------------------------
 
 container_main() {
-  setup
+  local cmd=
+  if [ $# -ge 1 ]; then
+    cmd="$1"; shift
+  else
+    cmd="show_tasks"
+  fi
 
+  setup
   build
 
-  cmd="$1"; shift
   case $cmd in
-    json | j*)     #task: Run json tests
+    json | j* )      #task: Run json tests
       test_json "$@"
       postproc "json"
-      ;;
 
-    lex | l*) #task: Run lex tests
+  ;; lex | l* )      #task: Run lex tests
       test_lex "$@"
       postproc "lex"
-      ;;
 
-    parse | p*)    #task: Run parse tests
+  ;; parse | p* )    #task: Run parse tests
       test_parse "$@"
       postproc "parse"
-      ;;
 
-    compile | c*)  #task: Run compile tests
+  ;; compile | c* )  #task: Run compile tests
       test_compile "$@"
       postproc "compile"
-      ;;
 
-    all | a*)      #task: Run all tests
+  ;; all | a* )      #task: Run all tests
       test_all
       postproc "all"
-      ;;
 
-    *)
+  ;; * )
       echo "Tasks:"
       grep '#task: ' $0 | grep -v grep
       ;;
   esac
 }
-
 
 # --------------------------------
 
