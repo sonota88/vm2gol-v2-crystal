@@ -34,7 +34,7 @@ RUN wget -q \
   && mv "crystal-${version}-1/" "crystal/" \
   && rm "$archive_file"
 
-ENV PATH "/home/${USER}/crystal/bin:${PATH}"
+ENV PATH="/home/${USER}/crystal/bin:${PATH}"
 
 RUN mkdir /home/${USER}/work
 
