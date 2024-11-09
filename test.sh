@@ -11,6 +11,7 @@ print_project_dir() {
 
 readonly PROJECT_DIR="$(print_project_dir)"
 readonly TEST_DIR="${PROJECT_DIR}/test"
+readonly TEST_COMMON_DIR="${PROJECT_DIR}/test_common"
 readonly TEMP_DIR="${PROJECT_DIR}/z_tmp"
 readonly EXE_FILE=${PROJECT_DIR}/bin/app
 
@@ -101,7 +102,7 @@ test_json_nn() {
     return
   fi
 
-  ruby test/diff.rb json $exp_file $temp_json_file
+  ruby ${TEST_COMMON_DIR}/diff.rb json $exp_file $temp_json_file
   if [ $? -ne 0 ]; then
     # meld $exp_file $temp_json_file &
 
@@ -135,7 +136,7 @@ test_lex_nn() {
     return
   fi
 
-  ruby test/diff.rb text $exp_file $temp_tokens_file
+  ruby ${TEST_COMMON_DIR}/diff.rb text $exp_file $temp_tokens_file
   if [ $? -ne 0 ]; then
     # meld $exp_file $temp_tokens_file &
 
@@ -179,7 +180,7 @@ test_parse_nn() {
     return
   fi
 
-  ruby test/diff.rb json $exp_file $temp_vgt_file
+  ruby ${TEST_COMMON_DIR}/diff.rb json $exp_file $temp_vgt_file
   if [ $? -ne 0 ]; then
     # meld $exp_file $temp_vga_file &
 
@@ -256,7 +257,7 @@ test_compile_nn() {
   fi
 
   if [ "$local_errs" = "" ]; then
-    ruby test/diff.rb asm $exp_file $temp_vga_file
+    ruby ${TEST_COMMON_DIR}/diff.rb asm $exp_file $temp_vga_file
     if [ $? -ne 0 ]; then
       # meld $exp_file $temp_vga_file &
 
