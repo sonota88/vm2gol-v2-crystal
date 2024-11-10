@@ -12,6 +12,7 @@ RUN apt update \
   && apt install -y --no-install-recommends \
     gcc \
     libc6-dev libpcre2-dev libevent-dev \
+    pkgconf \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
@@ -25,7 +26,7 @@ USER ${USER}
 
 WORKDIR /home/${USER}/
 
-ARG version="1.10.1"
+ARG version="1.11.0"
 ARG archive_file="crystal-${version}-1-linux-x86_64.tar.gz"
 
 RUN wget -q \
