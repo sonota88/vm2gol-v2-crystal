@@ -82,7 +82,7 @@ def _gen_expr_eq
 
   # else
   puts "  mov reg_a 0"
-  puts "  jump #{label_end}"
+  puts "  jmp #{label_end}"
 
   # then
   puts "label #{label_then}"
@@ -105,7 +105,7 @@ def _gen_expr_neq
 
   # else
   puts "  mov reg_a 1"
-  puts "  jump #{label_end}"
+  puts "  jmp #{label_end}"
 
   # then
   puts "label #{label_then}"
@@ -264,7 +264,7 @@ def gen_while(
 
   gen_stmts(fn_arg_names, lvar_names, body)
 
-  puts "  jump while_#{label_id}"
+  puts "  jmp while_#{label_id}"
 
   puts "label end_while_#{label_id}"
   puts ""
@@ -302,7 +302,7 @@ def gen_case(
     puts "  jump_eq #{label_end_when_head}_#{when_idx}"
 
     gen_stmts(fn_arg_names, lvar_names, rest)
-    puts "  jump #{label_end}"
+    puts "  jmp #{label_end}"
 
     puts "label #{label_end_when_head}_#{when_idx}"
   end
