@@ -78,7 +78,7 @@ def _gen_expr_eq
   puts "  pop reg_a"
 
   puts "  compare"
-  puts "  jump_eq #{label_then}"
+  puts "  je #{label_then}"
 
   # else
   puts "  mov reg_a 0"
@@ -101,7 +101,7 @@ def _gen_expr_neq
   puts "  pop reg_a"
 
   puts "  compare"
-  puts "  jump_eq #{label_then}"
+  puts "  je #{label_then}"
 
   # else
   puts "  mov reg_a 1"
@@ -260,7 +260,7 @@ def gen_while(
   puts "  mov reg_b 0" # 比較対象の値をセット
   puts "  compare"
 
-  puts "  jump_eq end_while_#{label_id}"
+  puts "  je end_while_#{label_id}"
 
   gen_stmts(fn_arg_names, lvar_names, body)
 
@@ -299,7 +299,7 @@ def gen_case(
     puts "  mov reg_b 0"
 
     puts "  compare"
-    puts "  jump_eq #{label_end_when_head}_#{when_idx}"
+    puts "  je #{label_end_when_head}_#{when_idx}"
 
     gen_stmts(fn_arg_names, lvar_names, rest)
     puts "  jmp #{label_end}"
