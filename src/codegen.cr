@@ -320,7 +320,7 @@ def gen_var(
       lvar_names : Names,
       stmt : Stmt
     )
-  puts "  sub_sp 1"
+  puts "  add_sp -1"
 
   if stmt.size == 3
     _gen_set(
