@@ -2,7 +2,7 @@
 
 set -o nounset
 
-readonly IMAGE=vm2gol-v2-crystal:12
+readonly IMAGE=mini-ruccola-crystal:12
 
 cmd_build() {
   docker build \
