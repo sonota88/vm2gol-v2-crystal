@@ -59,7 +59,7 @@ end
 def _gen_expr_add
   puts "  pop reg_b"
   puts "  pop reg_a"
-  puts "  add_ab"
+  puts "  add"
 end
 
 def _gen_expr_mult
