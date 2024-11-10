@@ -16,7 +16,7 @@ readonly TEMP_DIR="${PROJECT_DIR}/z_tmp"
 readonly EXE_FILE=${PROJECT_DIR}/bin/app
 
 readonly MAX_ID_JSON=8
-readonly MAX_ID_LEX=3
+readonly MAX_ID_LEX=4
 readonly MAX_ID_PARSE=2
 readonly MAX_ID_COMPILE=27
 
