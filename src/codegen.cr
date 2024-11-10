@@ -236,6 +236,9 @@ def gen_return(
     )
   expr = stmt[1]
   gen_expr(fn_arg_names, lvar_names, expr)
+
+  asm_epilogue()
+  puts "  ret"
 end
 
 def gen_while(
