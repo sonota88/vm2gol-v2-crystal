@@ -46,11 +46,11 @@ end
 
 def asm_prologue
   puts "  push bp"
-  puts "  cp sp bp"
+  puts "  mov sp bp"
 end
 
 def asm_epilogue
-  puts "  cp bp sp"
+  puts "  mov bp sp"
   puts "  pop bp"
 end
 
@@ -81,12 +81,12 @@ def _gen_expr_eq
   puts "  jump_eq #{label_then}"
 
   # else
-  puts "  cp 0 reg_a"
+  puts "  mov 0 reg_a"
   puts "  jump #{label_end}"
 
   # then
   puts "label #{label_then}"
-  puts "  cp 1 reg_a"
+  puts "  mov 1 reg_a"
 
   puts "label #{label_end}"
 end
@@ -104,12 +104,12 @@ def _gen_expr_neq
   puts "  jump_eq #{label_then}"
 
   # else
-  puts "  cp 1 reg_a"
+  puts "  mov 1 reg_a"
   puts "  jump #{label_end}"
 
   # then
   puts "label #{label_then}"
-  puts "  cp 0 reg_a"
+  puts "  mov 0 reg_a"
 
   puts "label #{label_end}"
 end
@@ -143,14 +143,14 @@ def gen_expr(
     )
   case expr
   in Int32
-    puts "  cp #{expr} reg_a"
+    puts "  mov #{expr} reg_a"
   in String
     if lvar_names.includes?(expr)
       disp = lvar_disp(lvar_names, expr)
-      puts "  cp [bp:#{disp}] reg_a"
+      puts "  mov [bp:#{disp}] reg_a"
     elsif fn_arg_names.includes?(expr)
       disp = fn_arg_disp(fn_arg_names, expr)
-      puts "  cp [bp:#{disp}] reg_a"
+      puts "  mov [bp:#{disp}] reg_a"
     else
       raise "must not happen"
     end
@@ -197,7 +197,7 @@ def gen_call_set(
   _gen_call(fn_arg_names, lvar_names, funcall)
 
   disp = lvar_disp(lvar_names, lvar_name)
-  puts "  cp reg_a [bp:#{disp}]"
+  puts "  mov reg_a [bp:#{disp}]"
 end
 
 def _gen_set(
@@ -210,7 +210,7 @@ def _gen_set(
 
   if lvar_names.includes?(lhs)
     disp = lvar_disp(lvar_names, lhs)
-    puts "  cp reg_a [bp:#{disp}]"
+    puts "  mov reg_a [bp:#{disp}]"
   else
     raise "unsupported"
   end
@@ -257,7 +257,7 @@ def gen_while(
 
   gen_expr(fn_arg_names, lvar_names, cond_expr)
 
-  puts "  cp 0 reg_b" # 比較対象の値をセット
+  puts "  mov 0 reg_b" # 比較対象の値をセット
   puts "  compare"
 
   puts "  jump_eq end_while_#{label_id}"
@@ -296,7 +296,7 @@ def gen_case(
 
     gen_expr(fn_arg_names, lvar_names, cond)
 
-    puts "  cp 0 reg_b"
+    puts "  mov 0 reg_b"
 
     puts "  compare"
     puts "  jump_eq #{label_end_when_head}_#{when_idx}"
