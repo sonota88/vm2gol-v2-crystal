@@ -174,7 +174,7 @@ def _gen_call(
 
   gen_vm_comment("call  #{fn_name}")
   puts "  call #{fn_name}"
-  puts "  add_sp #{fn_args.size}"
+  puts "  add sp #{fn_args.size}"
 end
 
 def gen_call(
@@ -323,7 +323,7 @@ def gen_var(
       lvar_names : Names,
       stmt : Stmt
     )
-  puts "  add_sp -1"
+  puts "  add sp -1"
 
   if stmt.size == 3
     _gen_set(
