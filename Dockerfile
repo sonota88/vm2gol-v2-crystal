@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 RUN apt update \
   && apt install -y --no-install-recommends \
@@ -18,6 +18,9 @@ RUN apt update \
 
 ARG USER
 ARG GROUP
+
+# https://askubuntu.com/questions/1513927/ubuntu-24-04-docker-images-now-includes-user-ubuntu-with-uid-gid-1000
+RUN userdel -r ubuntu
 
 RUN groupadd ${USER} \
   && useradd ${USER} -g ${GROUP} -m
